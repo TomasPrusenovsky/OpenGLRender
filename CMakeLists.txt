@@ -9,10 +9,11 @@ endif()
 project ("OpenGLRender")
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/*.cpp" "src/handle/*.cpp")
 
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
+add_subdirectory(vendor/glm)
 
 # Add source to this project's executable.
 add_executable(${PROJECT_NAME})
@@ -20,6 +21,8 @@ target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 target_link_libraries(${PROJECT_NAME} PRIVATE glad)
+target_link_libraries(${PROJECT_NAME} PRIVATE glm)
 target_include_directories(${PROJECT_NAME} PRIVATE vendor/glfw/include)
 target_include_directories(${PROJECT_NAME} PRIVATE vendor/glad/include)
+target_include_directories(${PROJECT_NAME} PRIVATE vendor/glm)
 
