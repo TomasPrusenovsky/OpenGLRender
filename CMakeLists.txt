@@ -9,7 +9,7 @@ endif()
 project ("OpenGLRender")
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB SOURCES "src/*.cpp" "src/handle/*.cpp")
+file(GLOB SOURCES "src/*.cpp" "src/handle/*.cpp" "src/handle/*.cpp")
 
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
