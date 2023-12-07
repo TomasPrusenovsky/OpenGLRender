@@ -2,13 +2,36 @@
 
 using namespace std;
 
+// TODO: OpenGL error check using modern stuff
+
 int main()
 {
-	Window win{ 1400, 1400, "e" };
+	float vertices[] = {
+		-0.5f,  0.5f,
+		-0.5f, -0.5f,
+		 0.5f,  0.5f,
+		 0.5f, -0.5f
+	};
+
+	Window win{ 800, 800, "e" };
+	opengl::Init();
+
+	opengl::Shader shader{ "shaders/basic.vert", "shaders/basic.frag" };
+	opengl::VBO VBO{vertices, sizeof(vertices)};
+	opengl::VAO VAO{};
+	VAO.SpecifyData(0, 2, 0);
+	VAO.BindVertexBuffer(VBO, 0, 0, 2 * sizeof(float));
+
 
 	while (win.IsRunning())
 	{
-		win.Update();
+		glViewport(0, 0, win.Width(), win.Height());
+		opengl::ClearColor(0.1f, 0.1f, 0.3f);
+
+		shader.Bind();
+		VAO.Bind();
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
+
 		win.SwapBuffers();
 	}
 

@@ -9,11 +9,14 @@ endif()
 project ("OpenGLRender")
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB SOURCES "src/*.cpp" "src/handle/*.cpp" "src/handle/*.cpp")
+#file(GLOB_RECURSE SOURCES "src/*.cpp" "src/handle/*.cpp" "src/handle/*.cpp" "src/opengl/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*/*.cpp")
 
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/glm)
+
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/shaders" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # Add source to this project's executable.
 add_executable(${PROJECT_NAME})
@@ -25,4 +28,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE glm)
 target_include_directories(${PROJECT_NAME} PRIVATE vendor/glfw/include)
 target_include_directories(${PROJECT_NAME} PRIVATE vendor/glad/include)
 target_include_directories(${PROJECT_NAME} PRIVATE vendor/glm)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 

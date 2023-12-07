@@ -24,6 +24,17 @@ void Window::Update()
 void Window::SwapBuffers()
 {
 	glfwSwapBuffers(m_Window);
+	Update();
+}
+
+void Window::SetVSync(bool enabled)
+{
+	if (enabled)
+		glfwSwapInterval(1);
+	else
+		glfwSwapInterval(0);
+
+	m_Settings.VSync = enabled;
 }
 
 void Window::Init()
@@ -44,8 +55,7 @@ void Window::CreateWindow()
 		std::cerr << "Failed to create Window" << std::endl;
 
 	glfwMakeContextCurrent(m_Window);
-
-	glfwMakeContextCurrent(m_Window);
+	SetVSync(true);
 	glfwSetWindowUserPointer(m_Window, &m_Settings);
 }
 

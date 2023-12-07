@@ -11,6 +11,7 @@ public:
 
 	void Update();
 	void SwapBuffers();
+	void SetVSync(bool enabled);
 	bool IsRunning() const { return m_Settings.shouldRun; }
 	uint32_t Width() const { return m_Settings.width; }
 	uint32_t Height() const { return m_Settings.height; }
