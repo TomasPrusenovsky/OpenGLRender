@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <cassert>
+#include <string>
 
 
 Window::Window(uint32_t width, uint32_t height, const char* title) :
@@ -18,6 +19,19 @@ Window::~Window()
 
 void Window::Update()
 {
+	m_Time.Update();
+
+	m_Tick.tick = false;
+	double delta = m_Time.curr - m_Tick.prevTime;
+	
+
+	if (delta > m_Tick.delay)
+	{
+		m_FPS = 1.0 / m_Time.delta;
+		m_Tick.prevTime = m_Time.curr;
+		m_Tick.tick = true;
+	}
+
 	glfwPollEvents();
 }
 
@@ -37,6 +51,21 @@ void Window::SetVSync(bool enabled)
 	m_Settings.VSync = enabled;
 }
 
+void Window::ShowFPS()
+{
+	if (IsTick())
+	{
+		std::string titleFPS = std::to_string(FPS()) + "FPS";
+		std::string timeDiff = std::to_string(m_Time.delta) + "ms";
+		SetTitle(m_Settings.title + " " + titleFPS + " " + timeDiff);
+	}
+}
+
+void Window::SetTitle(const std::string& title)
+{
+	glfwSetWindowTitle(m_Window, title.c_str());
+}
+
 void Window::Init()
 {
 	bool success = glfwInit();
@@ -49,7 +78,7 @@ void Window::Init()
 
 void Window::CreateWindow()
 {
-	m_Window = glfwCreateWindow(m_Settings.width, m_Settings.height, m_Settings.title, NULL, NULL);
+	m_Window = glfwCreateWindow(m_Settings.width, m_Settings.height, m_Settings.title.c_str(), NULL, NULL);
 	
 	if (m_Window == NULL)
 		std::cerr << "Failed to create Window" << std::endl;
@@ -67,6 +96,13 @@ void Window::SetCallBacks()
 			data.shouldRun = false;
 		});
 
+	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos)
+		{
+			Settings& data = *(Settings*)glfwGetWindowUserPointer(window);
+			data.mouse.posX = (float)xpos;
+			data.mouse.posY = (float)ypos;
+		});
+
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 		{
 			Settings& data = *(Settings*)glfwGetWindowUserPointer(window);
@@ -78,4 +114,11 @@ void Window::SetCallBacks()
 			else
 				data.isMinimized = false;
 		});
+}
+
+void Window::Time::Update()
+{
+	prev = curr;
+	curr = glfwGetTime();
+	delta = curr - prev;
 }

@@ -21,6 +21,31 @@ namespace opengl
 		glUseProgram(0);
 	}
 
+	void Shader::uni1f(const char* name, float data1)
+	{
+		glUniform1f(glGetUniformLocation(m_ID, name), data1);
+	}
+
+	void Shader::uni2f(const char* name, float data1, float data2)
+	{
+		glUniform2f(glGetUniformLocation(m_ID, name), data1, data2);
+	}
+
+	void Shader::uni3f(const char* name, float data1, float data2, float data3)
+	{
+		glUniform3f(glGetUniformLocation(m_ID, name), data1, data2, data3);
+	}
+
+	void Shader::uni4f(const char* name, float data1, float data2, float data3, float data4)
+	{
+		glUniform4f(glGetUniformLocation(m_ID, name), data1, data2, data3, data4);
+	}
+
+	void Shader::uni4mat(const char* name, float* val_ptr)
+	{
+		glUniformMatrix4fv(glGetUniformLocation(m_ID, name), 1, GL_FALSE, val_ptr);
+	}
+
 	bool Shader::GetFileContents(const std::string& filename, std::string& buffer)
 	{
 		std::ifstream file(filename.c_str(), std::ios_base::binary);

@@ -15,18 +15,6 @@ namespace opengl
 
 	}
 
-	void ClearColor(float r, float g, float b)
-	{
-		glClearColor(r, g, b, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
-
-	void ClearColor(float r, float g, float b, float a)
-	{
-		glClearColor(r, g, b, a);
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
-
     // Callback function for printing debug statements
     void APIENTRY GLDebugMessageCallback(GLenum source, GLenum type, GLuint id,
         GLenum severity, GLsizei length,
