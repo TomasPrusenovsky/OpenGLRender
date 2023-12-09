@@ -59,7 +59,6 @@ int main()
 
 
 	Window win{ 800, 800, "Hello window" };
-	win.SetVSync(false);
 	opengl::Init();
 
 	opengl::Shader shader{ "shaders/basic.vert", "shaders/basic.frag" };
@@ -76,15 +75,15 @@ int main()
 	glm::mat4 view{ 1.0f };
 
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
-	proj = glm::perspective(glm::radians(45.0f), win.AspectRatio(), 0.1f, 100.0f);
 	glEnable(GL_DEPTH_TEST);
 
 	while (win.IsRunning())
 	{	
 		opengl::ClearColor(0.1f, 0.4f, 0.1f);
+		proj = glm::perspective(glm::radians(45.0f), win.AspectRatio(), 0.1f, 100.0f);
 		win.ShowFPS();
 		glm::mat4 model{ 1.0f };
-		//model = glm::rotate(model, glm::radians((float)glfwGetTime() * 50.0f), glm::vec3(0.f, 1.f, 0.0f));
+		model = glm::rotate(model, glm::radians((float)glfwGetTime() * 50.0f), glm::vec3(0.f, 1.f, 0.0f));
 	
 		opengl::Viewport(win.Width(), win.Height());(0.1f, 0.1f, 0.3f);
 

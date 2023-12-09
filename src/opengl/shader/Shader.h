@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include "ShaderParser.h"
 #include <glad/glad.h>
 
 namespace opengl
@@ -20,10 +20,9 @@ namespace opengl
 		void uni4mat(const char* name, float* val_ptr);
 
 	private:
-		bool GetFileContents(const std::string& filename, std::string& buffer);
-		std::string LoadShader(const std::string& filename);
 		void CreateProgram(const char* vertSource, const char* fragSource);
 
+		ShaderParser m_Parser;
 		GLuint m_ID;
 	};
 }

@@ -13,7 +13,7 @@
 
 #include "opengl/Initializer.h"
 #include "opengl/Buffers/VBO.h"
-#include "opengl/Shader.h"
+#include "opengl/shader/Shader.h"
 #include "opengl/VAO.h"
 #include "opengl/utils/Basic.h"
 
